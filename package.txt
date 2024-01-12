@@ -1,0 +1,7 @@
+package 구성
+
+controller : 프론트와 백앤드를 연결
+domain(=Emtity) : DB테이블과 컬럼을 동일 java bean
+dto(vo) : 서비스측에서 사용 java bean
+repository(dao) : service 호출(실제 DB와 접근하여 CRUD 하는 객체)
+service : interface, interface를 구현한 implemnts
