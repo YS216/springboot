@@ -23,4 +23,8 @@
     insert into boardtest1
       values(boardtest1_seq.nextval, #{title}, #{writer}, #{content})
   </insert>
+  
+  <delete id="deleteBoard">
+    delete from boardtest1 where no=#{no}
+  </delete>
 </mapper>
