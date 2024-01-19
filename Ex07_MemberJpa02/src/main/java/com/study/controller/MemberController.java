@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,8 +68,16 @@ public class MemberController {
 	public String selectByNameLikeDesc(@RequestParam("name") String search, Model model) {
 		String name = search + "%";
 		model.addAttribute("members", memberService.selectByNameLikeDesc(name));
-		return "select_name_like";
+		return "select_name_like";	
+	}
+	
+	@GetMapping("/selectByNameLikeSort")
+	public String selectByNameLikeSort(@RequestParam("name") String search, Model model) {
+		String name = search + "%";
+		Sort sort = Sort.by(Sort.Order.desc("name"));
 		
+		model.addAttribute("members", memberService.selectByNameLike(name, sort));
+		return "select_name_like";
 	}
 }
 
