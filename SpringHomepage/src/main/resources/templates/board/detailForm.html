@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link href="/css/index.css" rel="stylesheet" />
 </head>
 <body>
@@ -46,5 +48,43 @@
 			<input type="hidden" name="bno" th:value="${board.bno}">
 		</form>
 	</div>
+	<br>
+	<div>
+			<table align="center">
+				<tr>
+					<td>댓글작성</td>
+					<td><textarea cols="70" rows="3" id="replyContent"></textarea></td>
+					<td><button onclick="insertReply();">등록</button></td>
+				</tr>
+				
+				<tr th:each="reply : ${reply}">
+					<td th:text="${reply.rwriter}"></td>
+					<td th:text="${reply.rcontent}"><textarea cols="70" rows="3" id="replyContent"></textarea></td>
+					<td th:text="*{#temporals.format(reply.createDate, 'yyyy-MM-dd')}"></td>
+				</tr>
+			
+			</table>
+	</div>
+	
+	<!-- 댓글 목록 -->
+	<script>
+		function insertReply() {
+			$.ajax({
+				url: "rinsert.bo",
+				data: {
+					"refBno": [[${board.bno}]],
+					"rwriter": "[[${loginUser.id}]]",
+					"rcontent": $("#replyContent").val()
+				},
+				type: "post",
+				success: function(data) {
+					location.reload();
+				},
+				error: function() {
+					console.log("댓글 등록 실패");
+				}
+			})
+		}
+	</script>
 </body>
 </html>

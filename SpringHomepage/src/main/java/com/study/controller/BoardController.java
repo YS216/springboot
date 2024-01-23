@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.study.domain.Board;
 import com.study.domain.Member;
 import com.study.service.BoardService;
+import com.study.service.ReplyService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +20,9 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
+	// 댓글 정보 가져올 경우
+	@Autowired
+	ReplyService replyService;
 	
 	private Member loginUser;	// 현재 페이지에서 모두 사용하기 위해 인스턴스 변수로 선언
 	
@@ -56,6 +60,7 @@ public class BoardController {
 		if(loginUser != null) {
 			model.addAttribute("loginUser", loginUser);
 		}
+		model.addAttribute("reply", replyService.findAllByRefBno(bno));
 		model.addAttribute("board", boardService.selectDetail(bno).get());
 		return "board/detailForm";
 	}
