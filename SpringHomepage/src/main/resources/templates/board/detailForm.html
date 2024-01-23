@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/css/index.css" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="~{/fragments/header.html :: fragment-menu}"></div>
+	<div class="outer">
+		<form action="update" method="post">
+			<table align="center">
+				<tr>
+					<th colspan="2" bgcolor="#AFA226" height="30">상 세 보 기</th>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input name="title" th:value="${board.title}"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea name="content" rows="10" cols="50" th:text="${board.content}"></textarea></td>
+				</tr>
+				<tr>
+					<td>작성자</td>
+					<td th:text="${board.writer}"></td>
+				</tr>
+				<tr>
+					<td>작성일</td>
+					<td th:text="*{#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right" th:text="|조회수 : ${board.count}|"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><hr></td>
+				</tr>
+				<span th:if="${loginUser != null}">
+					<tr>
+						<td colspan="2" align="center">
+							<input type="submit" value="수정">
+						</td>
+					</tr>
+				</span>
+			</table>
+			<input type="hidden" name="bno" th:value="${board.bno}">
+		</form>
+	</div>
+</body>
+</html>

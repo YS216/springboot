@@ -22,22 +22,21 @@
             </thead>
             <tbody>
 				<tr th:each="board, state: ${boardPage}">
-					<td th:text="${boardPage.totalElements-nowPage*boardPage.size()-state.index}"></td>
+					<td th:text="${boardPage.totalElements-nowPage*boardPage.size-state.index}"></td>
 					<td id="ellip">
-						<a th:href="@{detail(bno=${board.bno})}" th:text="${board.title}"></a>
+						<a th:href="@{detailForm(bno=${board.bno})}" th:text="${board.title}"></a>
 					</td>
 					<td th:text="${board.writer}"></td>
 					<td th:text="${board.count}"></td>
-					<td th:text="${board.createDate}"></td>
 					<td th:text="*{#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
 				</tr>
             </tbody>
         </table>
         
         <!-- 페이징 처리 -->
-        <div align="cener">
+        <div style="text-align:center">
         	<span th:if="${nowPage > 0}">
-        		<a th:href="@{${'/list'}(nowPage=${nowPage-1})}">Prev...</a>
+        		<a th:href="@{list(nowPage=${nowPage-1})}">Prev...</a>
         	</span>
         	<!-- 
         	#numbers : 타임리프에서 숫자 포맷 메소드를 지원
@@ -48,20 +47,17 @@
         			<strong th:text="|[${pageNumber+1}]|"></strong>
         		</span>
         		<span th:unless="${pageNumber == nowPage}">
-        			<a th:href="@{${'/list'}(nowPage=${pageNumber})}" th:text="|[${pageNumber+1}]|"></a>
+        			<a th:href="@{list(nowPage=${pageNumber})}" th:text="|[${pageNumber+1}]|"></a>
         		</span>
         	</span>
         	<span th:if="${nowPage < boardPage.totalPages-1}">
-        		<a th:href="@{${'/list'}(nowPage=${nowPage+1})}">...Next</a>
+        		<a th:href="@{list(nowPage=${nowPage+1})}">...Next</a>
         	</span>
         </div>
-        <a href="insertForm">새글등록</a>
-        <!-- 
-        <div th:if="${loginUser != null}">
+        
+        <div th:if="${loginUser != null}" align="right">
         	<a href="insertForm">새글등록</a>
         </div>
-         -->
 	</div>
-	
 </body>
 </html>

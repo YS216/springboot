@@ -1,0 +1,77 @@
+[문항 1]
+
+장점 
+ - 프로그렘 개발 시간의 단축
+- 관리의 용의성 증가
+- 개발자들의 역량 획일화
+- 검증된 아키택처의 재사용 가능
+- 아키택처의 일관성 유지
+
+단점 
+- 지나친 의존으로 개발자들의 능력 저하 
+- 습득시간이 길다
+
+
+[문항 2]
+
+라이브러리 관리를 자동화 할 수 있다
+
+추가된 라이브러리와 환경을 자동으로 관리하여 설정을 자동화 할 수 있다
+
+스프링 라이브러라와 서드퍼티 라이브러리를 함께 다운로드하여 라이브러리 버전을 자동으로 관리 할 수 있다
+
+테스트 환경과 내장서버가 있어 용이하다
+
+jar을 독립적으로 실행 가능하여 빠른 개발과 빠른 배포가 가능하다
+
+
+[문항 3]
+
+@SpringBootConfiguration
+
+@EnableAutoConfiguration
+
+@ComponentScan
+
+
+[문항 4]
+
+다른 데이터 매퍼들과는 달리 데이터베이스의 연동이 필요한 java 코드이다
+
+
+[문항 5]
+
+다양성을 기반으로 한JDBC API와 동일한 개념이다. 
+모든 ORM 프레임워크를 일관돤 방법으로 사용 가능하도록 확장된 API이다. 
+
+JPA 구현체에는 Hibernate, EclipseLink, DataNucleus가 있다
+
+
+[문항 6]
+
+@Data
+@Entity(name="BOARDAM")
+public class Board {
+	@Id
+	@GeneratedValue
+	private Long bno;
+	private String title;
+	private String contnet;
+	
+	@ManyToOne
+	@JoinColumn(name="WRITER")
+	private Member member;
+}
+
+
+[문항 7]
+
+인증과 인가는 API에서 자주 구현되는 기능중 하나이다. 
+인증은 유저가 누군인지 확인하는 절차로 회원가입과  로그인이 포함되어있다.
+인가는 유저가 요청하는 request 를 실행 할 수 있는 관한의 유무를 판단하는 절차이다
+
+
+[문항 8]
+
+@Service 어노테이션이다. 해당 클래스가 서비스 게층의 구성 요소임을 나타낸다. 
+주로 비즈니스 로직을 수행하며, 트랜젝션 관리와 예외 처리 등을 담장한다.
