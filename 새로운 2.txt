@@ -1,0 +1,7 @@
+
+Alt + B	open in default browser
+Shift + Alt + B	open in specified browser
+
+CONTROL + Q S / F1 사이드 미리보기
+
+ALT + W / 블럭잡고 태그넣기

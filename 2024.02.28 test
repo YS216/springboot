@@ -1,0 +1,147 @@
+1. rest Api의 설계 규칙
+
+URI는 동사보다 명사, 대문자보다는 소문자응 사용.
+마지막에 슬래시 미포함
+언더바 대신 하이픈 사용
+파일 확장자는 URI에 포함시키지 않음
+행위 미포함
+
+
+
+2. RESTful API이 뜻하는 것
+
+Rest의 원리를 따르는 시스템.
+ - REST API의 설계 규칙을 올바르게 치킨 시스템을 RESTful하다 할 수 있다
+ - REST API의 설계 구칙을 올바르게 지키지 못한 시스템은 REST Api를 사용하였지만, RESTful하지 못하다 할 수있다
+JSON이나 XML 형식의 데이터를 반환한다
+
+
+3. HTTP 프로토콜에서 요청 메소드의 종류 중 대중적으로 많이 쓰이는 4가지와 그 의미를 서술하시오.
+
+GET - 모든 사용자의 List를 리턴
+POST - 새로운 사용자 생성
+PUT - 특정 사용자 업데이트
+DELETE - 특정 사용자, 전체 사용자 삭제
+
+
+4. HTTP 응답 코드 종류중 OK(요청이 성공적으로 수행됨)일 때 반환되는 코드와 No content(전송할 데이터가 없음)일 때 반환되는 코드는 무엇인가?
+
+OK - 200
+No content - 204
+
+
+5. 아래와 같은 ajax로 서버에 전송했을 때 MenuRestConstroller클래스를 작성하시오
+- service의 클래스명 : MenuService
+
+document.querySelector("#typeSelector").addEventListener('change', (e) => {
+        $.ajax({
+            url: `/menu/type/${e.target.value}`,
+            method : 'GET',
+            success (result) {
+                menuTable('#menuType-result', result);
+            },
+            error : console.log
+        });
+    });
+	
+	
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/menu")
+public class MenuRestController {
+
+    private final MenuService menuService;
+
+    @Autowired
+    public MenuRestController(MenuService menuService) {
+        this.menuService = menuService;
+    }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<Menu>> getMenuByType(@PathVariable String type) {
+        List<Menu> menuList = menuService.getMenuByType(type);
+
+        if (menuList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(menuList, HttpStatus.OK);
+        }
+    }
+}
+	
+
+	
+6. 아래와 같은 ajax로 서버에 전송했을 때 MenuRestConstroller클래스에서 http프로토콜의 상태코드를 201로 보내는 프로그램을 작성하시오
+
+$.ajax({
+    url: `/menu`,
+    data : JSON.stringify(menu),
+    method : 'POST',
+    ... 이하 생략
+    });
+	
+	
+	
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/menu")
+public class MenuRestController {
+
+    private final MenuService menuService; 
+
+    @Autowired
+    public MenuRestController(MenuService menuService) {
+        this.menuService = menuService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createMenu(@RequestBody Menu menu) {
+        Long newMenuId = menuService.createMenu(menu);
+        return ResponseEntity.created(URI.create("/menu/" + newMenuId)).build();
+    }
+}
+
+
+
+7.  JWT의 장단점을 쓰시오
+
+장점 
+- 서버의 경우 세션 정보를 사용하지 않아 사용자 관리에 유용
+- 타 사이트에도 인증 제공 가능
+- 모든 종류의 디바이스와 어플에 토큰이 존재하면 접근 허용
+
+단점 
+- 강제로 Revoke의 어려움
+
+
+8. JWT 구조에 대해 서술하시오
+
+헤더 - JWT의 유형과 해시 알고리즘에 대한 데이터를 담고있음
+페이로드 - 실제로 전달하고자 하는 클레임 정보를 포함
+서명 - 비밀키 생성. 이 서명으로 토큰의 변경 유무를 확인 할 수 있다
+
+
+9.  OAuth의 개념을 쓰시오.
+
+사용자의 인증을 다른 시스템에서 대신 처리해주는 것
+
+
+10. OAuth2에서 추가된 기능을 쓰시오
+
+웹 뿐이 아니라 모바일 앱도 지원. 
+https의 지원으로 보안 강화
+인증절차와 구현의 단순화
+Access Token의 유효시간 설정으로 보안 강화
+
